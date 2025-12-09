@@ -12,10 +12,10 @@ const Browse = () => {
   const {
     sortBy,
     setSortBy,
-    filterSize,
-    setFilterSize,
-    filterColor,
-    setFilterColor,
+    filterSizes,
+    toggleSize,
+    filterColors,
+    toggleColor,
     clearFilters,
     filteredProducts,
     sizes,
@@ -39,10 +39,10 @@ const Browse = () => {
       <FilterBar
         sortBy={sortBy}
         setSortBy={setSortBy}
-        filterSize={filterSize}
-        setFilterSize={setFilterSize}
-        filterColor={filterColor}
-        setFilterColor={setFilterColor}
+        filterSizes={filterSizes}
+        toggleSize={toggleSize}
+        filterColors={filterColors}
+        toggleColor={toggleColor}
         clearFilters={clearFilters}
         sizes={sizes}
         colors={colors}

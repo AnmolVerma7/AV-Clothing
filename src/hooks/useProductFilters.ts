@@ -3,8 +3,8 @@ import type { Product } from '../context/ProductContext';
 
 export const useProductFilters = (products: Product[]) => {
   const [sortBy, setSortBy] = useState<string>('default');
-  const [filterSize, setFilterSize] = useState<string>('all');
-  const [filterColor, setFilterColor] = useState<string>('all');
+  const [filterSizes, setFilterSizes] = useState<string[]>([]);
+  const [filterColors, setFilterColors] = useState<string[]>([]);
 
   const { sizes, colors } = useMemo(() => {
     const allSizes = new Set<string>();
@@ -24,12 +24,14 @@ export const useProductFilters = (products: Product[]) => {
   const filteredProducts = useMemo(() => {
     let result = [...products];
 
-    if (filterSize !== 'all') {
-      result = result.filter((p) => p.sizes?.includes(filterSize));
+    // filter by sizes (OR logic - product must have at least one selected size)
+    if (filterSizes.length > 0) {
+      result = result.filter((p) => p.sizes?.some((size) => filterSizes.includes(size)));
     }
 
-    if (filterColor !== 'all') {
-      result = result.filter((p) => p.colors?.some((c) => c.name === filterColor));
+    // filter by colors (OR logic - product must have at least one selected color)
+    if (filterColors.length > 0) {
+      result = result.filter((p) => p.colors?.some((color) => filterColors.includes(color.name)));
     }
 
     switch (sortBy) {
@@ -47,21 +49,33 @@ export const useProductFilters = (products: Product[]) => {
     }
 
     return result;
-  }, [products, filterSize, filterColor, sortBy]);
+  }, [products, filterSizes, filterColors, sortBy]);
+
+  const toggleSize = (size: string) => {
+    setFilterSizes((prev) =>
+      prev.includes(size) ? prev.filter((s) => s !== size) : [...prev, size]
+    );
+  };
+
+  const toggleColor = (color: string) => {
+    setFilterColors((prev) =>
+      prev.includes(color) ? prev.filter((c) => c !== color) : [...prev, color]
+    );
+  };
 
   const clearFilters = () => {
     setSortBy('default');
-    setFilterSize('all');
-    setFilterColor('all');
+    setFilterSizes([]);
+    setFilterColors([]);
   };
 
   return {
     sortBy,
     setSortBy,
-    filterSize,
-    setFilterSize,
-    filterColor,
-    setFilterColor,
+    filterSizes,
+    toggleSize,
+    filterColors,
+    toggleColor,
     clearFilters,
     filteredProducts,
     sizes,
