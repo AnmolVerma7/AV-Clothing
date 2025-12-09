@@ -45,7 +45,7 @@ export const CartSummary = () => {
 
   const [completedOrder, setCompletedOrder] = useState<Order | null>(null);
 
-  // Reusable style for summary rows (label + value layout)
+  // shared row style
   const summaryRowStyle = { display: 'flex', justifyContent: 'space-between' };
 
   const handleCheckout = () => {

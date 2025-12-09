@@ -15,7 +15,7 @@ import { useCart } from '../../context/CartContext';
 export const CartTable = () => {
   const { cart, removeFromCart, updateQuantity } = useCart();
 
-  // Shared styles for table header cells
+  // header cell styling
   const headerCellStyle = { color: 'white' };
 
   return (

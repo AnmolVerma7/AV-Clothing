@@ -10,8 +10,7 @@ export interface DashboardMetrics {
 
 // Aggregates product data into sales metrics for the dashboard
 export const useSalesData = (products: Product[]): DashboardMetrics => {
-  // Optimization: useMemo cache avoids expensive sorting/reducing on every render.
-  // This is crucial for the dashboard where we process the entire product list.
+  // crunches all the numbers for the dashboard - memoized so it doesn't recalc on every render
   return useMemo(() => {
     const sortedBySales = [...products]
       .sort((a, b) => (b.totalSales || 0) - (a.totalSales || 0))
