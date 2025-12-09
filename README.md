@@ -49,14 +49,17 @@ src/
 
 ## Features
 
-- **Product Browsing** - Grid view with sorting and filtering
+- **Product Browsing** - Grid view with multi-select checkbox filters (size, color) and sorting
+- **Breadcrumb Navigation** - Clear navigation path on product pages
 - **Category Navigation** - Men's and Women's sections
 - **Product Details** - Full product information with size/color selection
-- **Shopping Cart** - Add, remove, update quantities with persistence
-- **Checkout Flow** - Order confirmation with dashboard redirect
+- **Shopping Cart** - Per-user cart persistence with add, remove, update quantities
+- **Checkout Flow** - Order confirmation with dynamic shipping and tax calculation
 - **Sales Dashboard** - Charts and tables for sales analytics (login required)
-- **Dark Mode** - Full dark/light theme support
-- **Responsive Design** - Mobile-friendly layout
+- **Admin Product View** - Per-product sales metrics and profit charts (admin only)
+- **Dark Mode** - Full dark/light theme support with custom color scheme
+- **Responsive Design** - Mobile-friendly layout with hamburger menu
+- **Modern UI** - Skeleton loaders and progress indicators
 
 📖 **[View Detailed Features & Learning Guide](FEATURES.md)** - Beginner-friendly explanations of how everything works!
 

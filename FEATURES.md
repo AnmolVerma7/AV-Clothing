@@ -37,25 +37,25 @@ src/
 
 ## Core Features Explained
 
-### 1. Product Browsing & Filtering
+### 1. Product Browsing & Multi-Select Filtering
 
-**What it does:** Lets users filter products by size and color, and sort by price or name.
+**What it does:** Lets users select multiple sizes and colors simultaneously, and sort by price or name.
 
 **How it works:**
 
 ```tsx
 // useProductFilters.ts
 const filteredProducts = useMemo(() => {
-  let result = [...products]; // Start with all products
+  let result = [...products];
 
-  // Only keep products that match the selected size
-  if (filterSize !== 'all') {
-    result = result.filter((p) => p.sizes?.includes(filterSize));
+  // Filter by sizes (OR logic - product must have at least one selected size)
+  if (filterSizes.length > 0) {
+    result = result.filter((p) => p.sizes?.some((size) => filterSizes.includes(size)));
   }
 
-  // Only keep products that match the selected color
-  if (filterColor !== 'all') {
-    result = result.filter((p) => p.colors?.some((c) => c.name === filterColor));
+  // Filter by colors (OR logic - product must have at least one selected color)
+  if (filterColors.length > 0) {
+    result = result.filter((p) => p.colors?.some((color) => filterColors.includes(color.name)));
   }
 
   // Sort the results
@@ -69,15 +69,124 @@ const filteredProducts = useMemo(() => {
   }
 
   return result;
-}, [products, filterSize, filterColor, sortBy]);
+}, [products, filterSizes, filterColors, sortBy]);
 ```
 
+**UI Implementation:**
+
+```tsx
+// FilterBar.tsx - Multi-select dropdown with checkboxes
+<Select
+  multiple
+  value={filterSizes}
+  renderValue={(selected) => (
+    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+      {selected.map((value) => (
+        <Chip key={value} label={value} size="small" color="secondary" />
+      ))}
+    </Box>
+  )}
+>
+  {sortedSizes.map((size) => (
+    <MenuItem key={size} value={size}>
+      <Checkbox checked={filterSizes.includes(size)} />
+      <ListItemText primary={size} />
+    </MenuItem>
+  ))}
+</Select>
+```
+
+**Why multi-select?**
+
+- More flexible: Select "S" AND "M" to see all options at once
+- Uses checkboxes as required by assignment spec
+- Clean dropdown UI (no visual clutter)
+
 **Why `useMemo`?**
-Filtering and sorting can be slow if you have hundreds of products. `useMemo` caches the result so React doesn't re-filter on every render—only when `products`, `filterSize`, `filterColor`, or `sortBy` actually change.
+
+Filtering and sorting can be slow if you have hundreds of products. `useMemo` caches the result so React doesn't re-filter on every render—only when `products`, `filterSizes`, `filterColors`, or `sortBy` actually change.
 
 ---
 
-### 2. Shopping Cart with User-Specific Persistence
+### 2. Breadcrumb Navigation
+
+**What it does:** Shows the current page's location in the site hierarchy with clickable links.
+
+**Implementation:**
+
+```tsx
+// ProductPage.tsx
+<Typography component="nav" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+  <Link to="/">Home</Link>
+  <span>›</span>
+  <Link to={`/${product.gender === 'mens' ? 'men' : 'women'}`}>
+    {product.gender === 'mens' ? 'Men' : 'Women'}
+  </Link>
+  <span>›</span>
+  <span>{product.category}</span>
+  <span>›</span>
+  <span style={{ fontWeight: 600 }}>{product.name}</span>
+</Typography>
+```
+
+**Example:**
+`Home › Men › Shirts › Classic Oxford Shirt`
+
+**Why it's useful:**
+
+- Easy navigation back to parent pages
+- Shows user where they are in the site
+- Improves SEO and accessibility
+
+---
+
+### 3. Modern Loading States
+
+**What it does:** Shows skeleton loaders and spinners instead of "Loading..." text.
+
+**Skeleton Loaders (for product grids):**
+
+```tsx
+// ProductGridSkeleton.tsx
+export const ProductGridSkeleton = () => {
+  return (
+    <Container maxWidth="lg" sx={{ py: 4 }}>
+      <Grid container spacing={4}>
+        {[...Array(8)].map((_, index) => (
+          <Grid key={index} size={{ xs: 12, sm: 6, md: 3 }}>
+            <Skeleton variant="rectangular" height={300} />
+            <Skeleton variant="text" />
+            <Skeleton variant="text" width="60%" />
+          </Grid>
+        ))}
+      </Grid>
+    </Container>
+  );
+};
+```
+
+**Circular Progress (for slower loads):**
+
+```tsx
+// ProductPage.tsx, SalesDashboard.tsx
+if (loading)
+  return (
+    <Container sx={{ py: 10, textAlign: 'center' }}>
+      <CircularProgress size={60} />
+    </Container>
+  );
+```
+
+**Why this matters:**
+
+- More professional than "Loading..." text
+- Skeleton shows layout structure while loading
+- Reduces perceived wait time
+- Modern UX pattern (used by Facebook, LinkedIn, etc.)
+
+---
+
+### 4. Shopping Cart with User-Specific Persistence
 
 **What it does:** Each user has their own cart that persists across browser sessions.
 
@@ -122,7 +231,7 @@ It's like a browser's "notebook" where you can save small amounts of data (like 
 
 ---
 
-### 3. Checkout with Dynamic Pricing
+### 5. Checkout with Dynamic Pricing
 
 **What it does:** Calculates shipping and tax based on destination and order total.
 
@@ -170,7 +279,7 @@ const SHIPPING_RATES = {
 
 ---
 
-### 4. Sales Dashboard (Admin Only)
+### 6. Sales Dashboard (Admin Only)
 
 **What it does:** Shows business analytics like top-selling products and profit charts.
 
@@ -212,7 +321,7 @@ Example:
 
 ---
 
-### 5. Authentication System
+### 7. Authentication System
 
 **What it does:** Tracks who is logged in and remembers them even after browser refresh.
 
