@@ -236,7 +236,6 @@ const ProductPage = () => {
         </Grid>
       </Box>
 
-
       {product && (
         <AdminProductDialog
           open={isAdminOpen}

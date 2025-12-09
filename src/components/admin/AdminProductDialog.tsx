@@ -32,7 +32,7 @@ export const AdminProductDialog = ({ open, onClose, product }: AdminProductDialo
   // Calculate detailed metrics
   const domesticGross = product.domesticSales * product.price;
   const internationalGross = product.internationalSales * product.price;
-  
+
   const domesticCost = product.domesticSales * product.cost;
   const internationalCost = product.internationalSales * product.cost;
 
@@ -79,9 +79,15 @@ export const AdminProductDialog = ({ open, onClose, product }: AdminProductDialo
             <Paper variant="outlined">
               <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 2, p: 2 }}>
                 <Typography fontWeight="bold">Metric</Typography>
-                <Typography fontWeight="bold" align="right">Domestic</Typography>
-                <Typography fontWeight="bold" align="right">International</Typography>
-                <Typography fontWeight="bold" align="right">Total</Typography>
+                <Typography fontWeight="bold" align="right">
+                  Domestic
+                </Typography>
+                <Typography fontWeight="bold" align="right">
+                  International
+                </Typography>
+                <Typography fontWeight="bold" align="right">
+                  Total
+                </Typography>
 
                 <Divider sx={{ gridColumn: 'span 4' }} />
 
@@ -102,10 +108,18 @@ export const AdminProductDialog = ({ open, onClose, product }: AdminProductDialo
 
                 <Divider sx={{ gridColumn: 'span 4' }} />
 
-                <Typography fontWeight="bold" color="success.main">Net Profit</Typography>
-                <Typography fontWeight="bold" align="right" color="success.main">{formatCurrency(domesticProfit)}</Typography>
-                <Typography fontWeight="bold" align="right" color="success.main">{formatCurrency(internationalProfit)}</Typography>
-                <Typography fontWeight="bold" align="right" color="success.main">{formatCurrency(product.totalProfit)}</Typography>
+                <Typography fontWeight="bold" color="success.main">
+                  Net Profit
+                </Typography>
+                <Typography fontWeight="bold" align="right" color="success.main">
+                  {formatCurrency(domesticProfit)}
+                </Typography>
+                <Typography fontWeight="bold" align="right" color="success.main">
+                  {formatCurrency(internationalProfit)}
+                </Typography>
+                <Typography fontWeight="bold" align="right" color="success.main">
+                  {formatCurrency(product.totalProfit)}
+                </Typography>
               </Box>
             </Paper>
           </Grid>
