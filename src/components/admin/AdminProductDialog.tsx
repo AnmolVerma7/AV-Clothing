@@ -61,6 +61,7 @@ export const AdminProductDialog = ({ open, onClose, product }: AdminProductDialo
     },
   ];
 
+  // Simple helper to ensure consistent currency formatting across the dialog
   const formatCurrency = (val: number) => `$${val.toFixed(2)}`;
 
   return (

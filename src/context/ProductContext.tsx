@@ -57,6 +57,9 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
       if (!response.ok) throw new Error('Failed to fetch data');
       const data: RawProduct[] = await response.json();
 
+      // Educational Note: We "enhance" the raw data immediately upon fetching.
+      // This Adapter pattern lets us pre-calculate derived values (gross, cost, profit)
+      // once, so the rest of the application can just read properties without doing math.
       const enhancedData: Product[] = data.map((product) => {
         const domesticSales = product.sales?.domestic || 0;
         const internationalSales = product.sales?.international || 0;
