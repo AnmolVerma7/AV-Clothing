@@ -28,7 +28,7 @@ import { AboutDialog } from '../common/AboutDialog';
 import { LoginDialog } from '../common/LoginDialog';
 
 export const Header = () => {
-  const { getCartCount, clearCart } = useCart();
+  const { getCartCount } = useCart();
   const { isAuthenticated, login, logout } = useAuth();
   const { mode, toggleTheme } = useTheme();
   const navigate = useNavigate();
@@ -42,7 +42,6 @@ export const Header = () => {
   const handleAuth = () => {
     if (isAuthenticated) {
       logout();
-      clearCart();
       navigate('/');
     } else {
       setIsLoginOpen(true);

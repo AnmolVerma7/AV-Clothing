@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect, useMemo, type ReactNode } from 'react';
+import { useAuth } from './AuthContext';
 
 export interface CartItem {
   id: string;
@@ -52,27 +53,37 @@ const SHIPPING_RATES = {
   International: { Standard: 20, Express: 30, Priority: 50 },
 };
 
+// helper to get storage key for a user
+const getCartKey = (email: string | null) => (email ? `cart_${email}` : 'cart_guest');
+const getOrdersKey = (email: string | null) => (email ? `orders_${email}` : 'orders_guest');
+
 export const CartProvider = ({ children }: { children: ReactNode }) => {
-  const [cart, setCart] = useState<CartItem[]>(() => {
-    const saved = localStorage.getItem('shoppingCart');
-    return saved ? JSON.parse(saved) : [];
-  });
+  const { user } = useAuth();
+  const userEmail = user?.email || null;
 
-  const [orders, setOrders] = useState<Order[]>(() => {
-    const saved = localStorage.getItem('completedOrders');
-    return saved ? JSON.parse(saved) : [];
-  });
-
+  const [cart, setCart] = useState<CartItem[]>([]);
+  const [orders, setOrders] = useState<Order[]>([]);
   const [shippingMethod, setShippingMethod] = useState<ShippingMethod>('Standard');
   const [destination, setDestination] = useState<Destination>('Canada');
 
+  // load cart when user changes - this is intentional to sync from localStorage
+  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
-    localStorage.setItem('shoppingCart', JSON.stringify(cart));
-  }, [cart]);
+    const savedCart = localStorage.getItem(getCartKey(userEmail));
+    const savedOrders = localStorage.getItem(getOrdersKey(userEmail));
+    setCart(savedCart ? JSON.parse(savedCart) : []);
+    setOrders(savedOrders ? JSON.parse(savedOrders) : []);
+  }, [userEmail]);
+  /* eslint-enable react-hooks/set-state-in-effect */
+
+  // persist cart when it changes
+  useEffect(() => {
+    localStorage.setItem(getCartKey(userEmail), JSON.stringify(cart));
+  }, [cart, userEmail]);
 
   useEffect(() => {
-    localStorage.setItem('completedOrders', JSON.stringify(orders));
-  }, [orders]);
+    localStorage.setItem(getOrdersKey(userEmail), JSON.stringify(orders));
+  }, [orders, userEmail]);
 
   const addToCart = (newItem: CartItem) => {
     setCart((prev) => {
