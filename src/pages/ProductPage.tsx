@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import {
   Container,
   Typography,
@@ -23,7 +23,6 @@ import { AdminProductDialog } from '../components/admin/AdminProductDialog';
 
 const ProductPage = () => {
   const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
   const { products, loading } = useProducts();
   const { addToCart } = useCart();
   const { isAuthenticated, user } = useAuth();
@@ -81,9 +80,28 @@ const ProductPage = () => {
 
   return (
     <Container maxWidth="lg" sx={{ py: 6 }}>
-      <Button onClick={() => navigate(-1)} sx={{ mb: 4, color: 'text.primary' }}>
-        &larr; Back
-      </Button>
+      {/* Breadcrumbs */}
+      <Box sx={{ mb: 4 }}>
+        <Typography
+          component="nav"
+          sx={{ display: 'flex', alignItems: 'center', gap: 1, color: 'text.secondary' }}
+        >
+          <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+            Home
+          </Link>
+          <span>›</span>
+          <Link
+            to={`/${product.gender === 'mens' ? 'men' : 'women'}`}
+            style={{ textDecoration: 'none', color: 'inherit' }}
+          >
+            {product.gender === 'mens' ? 'Men' : 'Women'}
+          </Link>
+          <span>›</span>
+          <span style={{ color: 'inherit' }}>{product.category}</span>
+          <span>›</span>
+          <span style={{ fontWeight: 600 }}>{product.name}</span>
+        </Typography>
+      </Box>
 
       <Grid container spacing={6}>
         {/* Product Image */}
