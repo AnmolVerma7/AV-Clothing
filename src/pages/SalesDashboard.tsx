@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { Container, Typography, Button } from '@mui/material';
+import { Container, Typography, Button, CircularProgress } from '@mui/material';
 import { useAuth } from '../context/AuthContext';
 import { useProducts } from '../context/ProductContext';
 import { useCart } from '../context/CartContext';
@@ -31,7 +31,11 @@ const SalesDashboard = () => {
   }
 
   if (loading) {
-    return <Typography sx={{ p: 4, textAlign: 'center' }}>Loading Data...</Typography>;
+    return (
+      <Container sx={{ py: 10, textAlign: 'center' }}>
+        <CircularProgress size={60} />
+      </Container>
+    );
   }
 
   return (

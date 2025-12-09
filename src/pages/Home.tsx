@@ -2,13 +2,14 @@ import { Container, Typography, Button, Box, Grid } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useProducts } from '../context/ProductContext';
 import { ProductCard } from '../components/product/ProductCard';
+import { ProductGridSkeleton } from '../components/common/ProductGridSkeleton';
 
 const Home = () => {
   const { products, loading, error } = useProducts();
 
   const featuredProducts = products.slice(0, 4);
 
-  if (loading) return <Typography sx={{ p: 4, textAlign: 'center' }}>Loading...</Typography>;
+  if (loading) return <ProductGridSkeleton />;
   if (error)
     return (
       <Typography color="error" sx={{ p: 4, textAlign: 'center' }}>

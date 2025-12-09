@@ -13,6 +13,7 @@ import {
   Alert,
   Snackbar,
   Paper,
+  CircularProgress,
 } from '@mui/material';
 import { useProducts } from '../context/ProductContext';
 import { useCart } from '../context/CartContext';
@@ -69,7 +70,12 @@ const ProductPage = () => {
     setShowNotification(true);
   };
 
-  if (loading) return <Typography sx={{ p: 4, textAlign: 'center' }}>Loading...</Typography>;
+  if (loading)
+    return (
+      <Container sx={{ py: 10, textAlign: 'center' }}>
+        <CircularProgress size={60} />
+      </Container>
+    );
   if (!product)
     return <Typography sx={{ p: 4, textAlign: 'center' }}>Product not found</Typography>;
 

@@ -3,6 +3,7 @@ import { useProducts } from '../context/ProductContext';
 import { ProductCard } from '../components/product/ProductCard';
 import { useProductFilters } from '../hooks/useProductFilters';
 import { FilterBar } from '../components/browse/FilterBar';
+import { ProductGridSkeleton } from '../components/common/ProductGridSkeleton';
 
 const Browse = () => {
   const { products, loading, error } = useProducts();
@@ -21,7 +22,7 @@ const Browse = () => {
     colors,
   } = useProductFilters(products);
 
-  if (loading) return <Typography sx={{ p: 4, textAlign: 'center' }}>Loading...</Typography>;
+  if (loading) return <ProductGridSkeleton />;
   if (error)
     return (
       <Typography color="error" sx={{ p: 4, textAlign: 'center' }}>

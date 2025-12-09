@@ -1,6 +1,7 @@
 import { Container, Typography, Grid, Box } from '@mui/material';
 import { useProducts } from '../context/ProductContext';
 import { ProductCard } from '../components/product/ProductCard';
+import { ProductGridSkeleton } from '../components/common/ProductGridSkeleton';
 
 interface CategoryPageProps {
   category: 'Men' | 'Women';
@@ -21,7 +22,7 @@ const CategoryPage = ({ category }: CategoryPageProps) => {
     );
   });
 
-  if (loading) return <Typography sx={{ p: 4, textAlign: 'center' }}>Loading...</Typography>;
+  if (loading) return <ProductGridSkeleton />;
   if (error)
     return (
       <Typography color="error" sx={{ p: 4, textAlign: 'center' }}>
