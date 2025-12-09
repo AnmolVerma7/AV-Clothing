@@ -69,8 +69,8 @@ src/
 
 ```bash
 # Clone the repository
-git clone <repository-url>
-cd assignment2
+git clone https://github.com/AnmolVerma7/AV-Clothing.git
+cd AV-Clothing
 
 # Install dependencies
 npm install
@@ -100,8 +100,8 @@ _(This is a simulated login - any credentials will be accepted)_
 
 ## 🔗 Links
 
-- **Live Demo:** [Deployed URL]
-- **GitHub Repository:** [Repository URL]
+- **Live Demo:** [https://av-clothing.vercel.app](https://av-clothing.vercel.app)
+- **GitHub Repository:** [https://github.com/AnmolVerma7/AV-Clothing](https://github.com/AnmolVerma7/AV-Clothing)
 
 ## 📸 Image Credits
 
