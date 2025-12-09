@@ -58,6 +58,8 @@ src/
 - **Dark Mode** - Full dark/light theme support
 - **Responsive Design** - Mobile-friendly layout
 
+📖 **[View Detailed Features & Learning Guide](FEATURES.md)** - Beginner-friendly explanations of how everything works!
+
 ## Setup Instructions
 
 ### Prerequisites
