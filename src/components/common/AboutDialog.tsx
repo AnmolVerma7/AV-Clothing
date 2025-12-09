@@ -61,12 +61,21 @@ export const AboutDialog = ({ open, onClose }: AboutDialogProps) => {
         </Typography>
         <Typography variant="body2">
           <Link
-            href="https://github.com/anmolverma"
+            href="https://github.com/AnmolVerma7"
             target="_blank"
             rel="noopener"
             color="secondary"
           >
             GitHub Profile
+          </Link>
+          <br />
+          <Link
+            href="https://github.com/AnmolVerma7/AV-Clothing"
+            target="_blank"
+            rel="noopener"
+            color="secondary"
+          >
+            Project Repository
           </Link>
           <br />
           Images provided by{' '}

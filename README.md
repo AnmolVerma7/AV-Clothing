@@ -2,11 +2,11 @@
 
 A modern e-commerce clothing store built with React, TypeScript, and Material-UI.
 
-## 🎯 Project Overview
+## Project Overview
 
 This is a full-featured clothing e-commerce application developed for COMP 4513 - Assignment 2. It includes product browsing, filtering, shopping cart functionality, and a sales dashboard.
 
-## 🚀 Technologies Used
+## Technologies Used
 
 - **React 19** - UI framework
 - **TypeScript** - Type safety
@@ -16,7 +16,7 @@ This is a full-featured clothing e-commerce application developed for COMP 4513 
 - **Recharts** - Data visualization for sales dashboard
 - **LocalStorage** - Cart and order persistence
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 src/
@@ -47,7 +47,7 @@ src/
     └── constants.ts
 ```
 
-## ✨ Features
+## Features
 
 - **Product Browsing** - Grid view with sorting and filtering
 - **Category Navigation** - Men's and Women's sections
@@ -58,7 +58,7 @@ src/
 - **Dark Mode** - Full dark/light theme support
 - **Responsive Design** - Mobile-friendly layout
 
-## 🛠️ Setup Instructions
+## Setup Instructions
 
 ### Prerequisites
 
@@ -85,11 +85,11 @@ npm run build
 npm run preview
 ```
 
-## 👥 Team Members
+## Team Members
 
 - Anmol Verma
 
-## 📝 Login Credentials
+## Login Credentials
 
 For testing the dashboard and admin features:
 
@@ -98,16 +98,16 @@ For testing the dashboard and admin features:
 
 _(This is a simulated login - any credentials will be accepted)_
 
-## 🔗 Links
+## Links
 
 - **Live Demo:** [https://av-clothing.vercel.app](https://av-clothing.vercel.app)
 - **GitHub Repository:** [https://github.com/AnmolVerma7/AV-Clothing](https://github.com/AnmolVerma7/AV-Clothing)
 
-## 📸 Image Credits
+## Image Credits
 
 - Product images: [placehold.co](https://placehold.co)
 - Product data: GitHub Gist API
 
-## 📄 License
+## License
 
 This project was created for educational purposes as part of COMP 4513.
