@@ -76,8 +76,16 @@ export const AdminProductDialog = ({ open, onClose, product }: AdminProductDialo
             <Typography variant="h6" gutterBottom>
               Sales Metrics
             </Typography>
-            <Paper variant="outlined">
-              <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 2, p: 2 }}>
+            <Paper variant="outlined" sx={{ overflow: 'auto' }}>
+              <Box
+                sx={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(4, minmax(90px, 1fr))',
+                  gap: 2,
+                  p: 2,
+                  minWidth: 400,
+                }}
+              >
                 <Typography fontWeight="bold">Metric</Typography>
                 <Typography fontWeight="bold" align="right">
                   Domestic
