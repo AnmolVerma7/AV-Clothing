@@ -18,6 +18,7 @@ import { useProducts } from '../context/ProductContext';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import { ProductCard } from '../components/product/ProductCard';
+import { AdminProductDialog } from '../components/admin/AdminProductDialog';
 
 const ProductPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -32,6 +33,7 @@ const ProductPage = () => {
   const [selectedColor, setSelectedColor] = useState('');
   const [showNotification, setShowNotification] = useState(false);
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
+  const [isAdminOpen, setIsAdminOpen] = useState(false);
 
   // Clear form when switching products - this is intentional
   /* eslint-disable react-hooks/set-state-in-effect */
@@ -172,6 +174,19 @@ const ProductPage = () => {
               </Button>
             </Box>
 
+            {isAuthenticated && (
+              <Box sx={{ mt: 2 }}>
+                <Button
+                  variant="outlined"
+                  color="warning"
+                  fullWidth
+                  onClick={() => setIsAdminOpen(true)}
+                >
+                  Admin View
+                </Button>
+              </Box>
+            )}
+
             <Box sx={{ mt: 4 }}>
               <Typography variant="subtitle2" gutterBottom>
                 Material: {product.material}
@@ -220,6 +235,15 @@ const ProductPage = () => {
             ))}
         </Grid>
       </Box>
+
+
+      {product && (
+        <AdminProductDialog
+          open={isAdminOpen}
+          onClose={() => setIsAdminOpen(false)}
+          product={product}
+        />
+      )}
     </Container>
   );
 };
