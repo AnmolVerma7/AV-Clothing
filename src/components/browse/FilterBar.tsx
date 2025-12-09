@@ -6,11 +6,11 @@ import {
   Select,
   MenuItem,
   Button,
-  Box,
-  Typography,
-  FormGroup,
-  FormControlLabel,
   Checkbox,
+  ListItemText,
+  OutlinedInput,
+  Chip,
+  Box,
 } from '@mui/material';
 
 interface FilterBarProps {
@@ -25,6 +25,26 @@ interface FilterBarProps {
   clearFilters: () => void;
 }
 
+// Sort sizes in proper clothing order
+const sortSizes = (sizes: string[]) => {
+  const sizeOrder = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'S/M', 'L/XL', 'One Size'];
+
+  return [...sizes].sort((a, b) => {
+    const aIndex = sizeOrder.indexOf(a);
+    const bIndex = sizeOrder.indexOf(b);
+
+    if (aIndex !== -1 && bIndex !== -1) return aIndex - bIndex;
+    if (aIndex !== -1) return -1;
+    if (bIndex !== -1) return 1;
+
+    const aNum = parseInt(a);
+    const bNum = parseInt(b);
+    if (!isNaN(aNum) && !isNaN(bNum)) return aNum - bNum;
+
+    return a.localeCompare(b);
+  });
+};
+
 export const FilterBar = ({
   sortBy,
   setSortBy,
@@ -36,12 +56,14 @@ export const FilterBar = ({
   colors,
   clearFilters,
 }: FilterBarProps) => {
+  const sortedSizes = sortSizes(sizes);
+
   return (
     <Paper sx={{ p: 3, mb: 4 }}>
       <Grid container spacing={3} alignItems="center">
         {/* Sort By */}
-        <Grid size={{ xs: 12, md: 4 }}>
-          <FormControl fullWidth>
+        <Grid size={{ xs: 12, md: 3 }}>
+          <FormControl fullWidth size="small">
             <InputLabel>Sort By</InputLabel>
             <Select value={sortBy} label="Sort By" onChange={(e) => setSortBy(e.target.value)}>
               <MenuItem value="default">Featured</MenuItem>
@@ -54,50 +76,112 @@ export const FilterBar = ({
 
         {/* Size Filter */}
         <Grid size={{ xs: 12, md: 3 }}>
-          <Box>
-            <Typography variant="subtitle2" gutterBottom>
-              Size
-            </Typography>
-            <FormGroup row>
-              {sizes.map((size) => (
-                <FormControlLabel
-                  key={size}
-                  control={
-                    <Checkbox
-                      checked={filterSizes.includes(size)}
-                      onChange={() => toggleSize(size)}
-                      size="small"
-                    />
-                  }
-                  label={size}
-                />
+          <FormControl fullWidth size="small">
+            <InputLabel>Size</InputLabel>
+            <Select
+              multiple
+              value={filterSizes}
+              onChange={(e) => {
+                const newValue = e.target.value as string[];
+                // Find what was added or removed
+                const added = newValue.find((v) => !filterSizes.includes(v));
+                const removed = filterSizes.find((v) => !newValue.includes(v));
+
+                if (added) toggleSize(added);
+                else if (removed) toggleSize(removed);
+              }}
+              input={<OutlinedInput label="Size" />}
+              renderValue={(selected) =>
+                selected.length === 0 ? (
+                  'All Sizes'
+                ) : (
+                  <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                    {selected.map((value) => (
+                      <Chip key={value} label={value} size="small" color="secondary" />
+                    ))}
+                  </Box>
+                )
+              }
+              MenuProps={{
+                PaperProps: {
+                  style: {
+                    maxHeight: 300,
+                  },
+                },
+              }}
+            >
+              {sortedSizes.map((size) => (
+                <MenuItem key={size} value={size}>
+                  <Checkbox
+                    checked={filterSizes.includes(size)}
+                    size="small"
+                    sx={{
+                      color: 'text.secondary',
+                      '&.Mui-checked': {
+                        color: 'secondary.main',
+                      },
+                    }}
+                  />
+                  <ListItemText primary={size} />
+                </MenuItem>
               ))}
-            </FormGroup>
-          </Box>
+            </Select>
+          </FormControl>
         </Grid>
 
         {/* Color Filter */}
-        <Grid size={{ xs: 12, md: 3 }}>
-          <Box>
-            <Typography variant="subtitle2" gutterBottom>
-              Color
-            </Typography>
-            <FormGroup row>
-              {colors.slice(0, 5).map((color) => (
-                <FormControlLabel
-                  key={color}
-                  control={
-                    <Checkbox
-                      checked={filterColors.includes(color)}
-                      onChange={() => toggleColor(color)}
-                      size="small"
-                    />
-                  }
-                  label={color}
-                />
+        <Grid size={{ xs: 12, md: 4 }}>
+          <FormControl fullWidth size="small">
+            <InputLabel>Color</InputLabel>
+            <Select
+              multiple
+              value={filterColors}
+              onChange={(e) => {
+                const newValue = e.target.value as string[];
+                // Find what was added or removed
+                const added = newValue.find((v) => !filterColors.includes(v));
+                const removed = filterColors.find((v) => !newValue.includes(v));
+
+                if (added) toggleColor(added);
+                else if (removed) toggleColor(removed);
+              }}
+              input={<OutlinedInput label="Color" />}
+              renderValue={(selected) =>
+                selected.length === 0 ? (
+                  'All Colors'
+                ) : (
+                  <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                    {selected.map((value) => (
+                      <Chip key={value} label={value} size="small" color="secondary" />
+                    ))}
+                  </Box>
+                )
+              }
+              MenuProps={{
+                PaperProps: {
+                  style: {
+                    maxHeight: 300,
+                  },
+                },
+              }}
+            >
+              {colors.map((color) => (
+                <MenuItem key={color} value={color}>
+                  <Checkbox
+                    checked={filterColors.includes(color)}
+                    size="small"
+                    sx={{
+                      color: 'text.secondary',
+                      '&.Mui-checked': {
+                        color: 'secondary.main',
+                      },
+                    }}
+                  />
+                  <ListItemText primary={color} />
+                </MenuItem>
               ))}
-            </FormGroup>
-          </Box>
+            </Select>
+          </FormControl>
         </Grid>
 
         {/* Clear Filters */}
