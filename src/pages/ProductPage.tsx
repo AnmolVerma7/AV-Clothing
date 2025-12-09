@@ -25,7 +25,7 @@ const ProductPage = () => {
   const navigate = useNavigate();
   const { products, loading } = useProducts();
   const { addToCart } = useCart();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
 
   const product = products.find((p) => p.id === id);
 
@@ -174,7 +174,7 @@ const ProductPage = () => {
               </Button>
             </Box>
 
-            {isAuthenticated && (
+            {isAuthenticated && user?.email === 'admin@avclothing.com' && (
               <Box sx={{ mt: 2 }}>
                 <Button
                   variant="outlined"

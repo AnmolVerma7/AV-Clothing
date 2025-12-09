@@ -96,7 +96,7 @@ For testing the dashboard and admin features:
 - **Email:** admin@avclothing.com
 - **Password:** password123
 
-_(This is a simulated login - any credentials will be accepted)_
+> **Note:** To access the **Admin Product View** (Sales Metrics & Profit Charts on product pages), you **MUST** log in with the email `admin@avclothing.com`. Other email addresses will log in as standard users.
 
 ## Links
 

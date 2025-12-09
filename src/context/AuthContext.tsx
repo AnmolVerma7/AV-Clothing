@@ -17,11 +17,19 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
     return localStorage.getItem('isAuthenticated') === 'true';
   });
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>(() => {
+    const savedEmail = localStorage.getItem('userEmail');
+    return savedEmail ? { email: savedEmail } : null;
+  });
 
   useEffect(() => {
     localStorage.setItem('isAuthenticated', String(isAuthenticated));
-  }, [isAuthenticated]);
+    if (user?.email) {
+      localStorage.setItem('userEmail', user.email);
+    } else {
+      localStorage.removeItem('userEmail');
+    }
+  }, [isAuthenticated, user]);
 
   const login = (email: string) => {
     setIsAuthenticated(true);
