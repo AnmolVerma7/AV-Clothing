@@ -37,18 +37,7 @@ export const Header = () => {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ mr: 4 }}>
-            <Link
-              to="/"
-              style={{
-                color: 'inherit',
-                textDecoration: 'none',
-                fontWeight: 'bold',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '12px',
-              }}
-            >
-              <img src="/logo.svg" alt="AV Logo" style={{ width: 32, height: 32 }} />
+            <Link to="/" style={{ color: 'inherit', textDecoration: 'none', fontWeight: 'bold' }}>
               AV Clothing
             </Link>
           </Typography>
